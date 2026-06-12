@@ -1,17 +1,34 @@
-import type { ChatMessageType, ChatMessage } from './types'
+import type { ChatMessageEnvironment, ChatMessageType, ChatMessage, TwitchId } from './types'
 
 type ChatMessageCallback = (chatMessage: ChatMessage) => void
 
-const liveMessageSelector = '.chat-line__message[data-a-user]'
+const liveMessageSelector = '.chat-line__message'
 const vodMessageSelector = '.vod-message'
 const nameElementSelector = '.chat-author__display-name[data-a-user]'
 const bodyElementSelector = '.text-fragment[data-a-target="chat-message-text"]'
+const ffzMetadataSelector = 'div[data-room-id][data-user-id][data-user]'
+const ffzNameElementSelector = '.chat-author__display-name'
+const anyEnvironmentMessageSelector = `${nameElementSelector}, ${ffzMetadataSelector}`
 
 export const observeChatMessages = (callback: ChatMessageCallback) => {
-    const examineMessage = (nameElement: HTMLElement) => {
-        if (!nameElement.dataset.aUser) return
+    const examineMessage = (hookElement: HTMLElement) => {
+        // Grab the user's twitch ID and name element, which varies when FFZ
+        // is present on the page
+        let twitchId: TwitchId | null = null
+        let environment: ChatMessageEnvironment | null = null
+        let nameElement: HTMLElement | null = null
+        if (hookElement.matches(ffzMetadataSelector)) {
+            twitchId = hookElement.dataset.userId || null
+            environment = 'ffz'
+            nameElement = hookElement.querySelector(ffzNameElementSelector)
+        } else {
+            twitchId = hookElement.dataset.aUser || null
+            environment = 'vanilla'
+            nameElement = hookElement
+        }
 
-        const username: string = nameElement.dataset.aUser
+        if (!twitchId || !nameElement) return
+
         const rootElement = nameElement.closest(`${liveMessageSelector}, ${vodMessageSelector}`) as HTMLElement | null
         if (!rootElement) return
 
@@ -21,7 +38,8 @@ export const observeChatMessages = (callback: ChatMessageCallback) => {
 
         const chatMessage: ChatMessage = {
             type: messageType,
-            username,
+            environment,
+            twitchId,
             bodyText: bodyElement.textContent,
             rootElement,
             nameElement,
@@ -33,8 +51,8 @@ export const observeChatMessages = (callback: ChatMessageCallback) => {
     const handleAddedNode = (node: Node) => {
         if (!(node instanceof HTMLElement)) return
 
-        if (node.matches(nameElementSelector)) examineMessage(node)
-        node.querySelectorAll<HTMLElement>(nameElementSelector).forEach(examineMessage)
+        if (node.matches(anyEnvironmentMessageSelector)) examineMessage(node)
+        node.querySelectorAll<HTMLElement>(anyEnvironmentMessageSelector).forEach(examineMessage)
     }
 
     const observer = new MutationObserver((mutations) => {

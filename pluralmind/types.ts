@@ -8,9 +8,12 @@ export type TwitchId = string | number
 
 export type ChatMessageType = 'live' | 'vod'
 
+export type ChatMessageEnvironment = 'vanilla' | 'ffz'
+
 export interface ChatMessage {
     type: ChatMessageType
-    username: string
+    environment: ChatMessageEnvironment
+    twitchId: TwitchId
     bodyText: string
     rootElement: HTMLElement
     nameElement: HTMLElement

@@ -9,7 +9,7 @@ const handleMessage = async (message: ChatMessage) => {
     // Check if this user has a system
     // Note: We have to fetch early (rather than checking for something that
     // looks like a proxy) because the user may have autoproxy enabled.
-    const system = await pluralMindService.fetchSystem(message.username)
+    const system = await pluralMindService.fetchSystem(message.twitchId)
     if (!system) return
 
     // Alrighty, we have a system!
