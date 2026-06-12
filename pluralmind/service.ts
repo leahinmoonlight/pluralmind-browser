@@ -18,7 +18,7 @@ export class PluralMindService {
         if (cached && now - cached.timestamp < CACHE_DURATION) return cached.system
 
         // We need fresh data, check if there's already a pending fetch for this system
-        if (pendingFetches[id]) return await pendingFetches[id]
+        if (id in pendingFetches) return await pendingFetches[id]
 
         // Load the system's info fresh
         pendingFetches[id] = new Promise(async (resolve) => {
