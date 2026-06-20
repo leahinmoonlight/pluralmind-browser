@@ -4,6 +4,8 @@
     "private": true,
     "version": "1.2.0",
     "type": "module",
+    "license": "GPL-3.0-only",
+    "author": "leahinmoonlight",
     "scripts": {
         "dev:chrome": "wxt",
         "dev:firefox": "wxt -b firefox",
