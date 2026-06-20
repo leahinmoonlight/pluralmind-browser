@@ -1,0 +1,19 @@
+.pm-pronouns .ffz-badge[data-badge^="addon-pn-"] {
+    display: none !important;
+}
+
+.chat-line__username[data-pm-pronouns]::before,
+.video-chat__message-author[data-pm-pronouns]::before {
+    content: attr(data-pm-pronouns);
+    display: inline-block;
+    margin-right: 0.3rem;
+    padding: 0 0.4rem;
+    border-radius: 0.5rem;
+    font-size: 1.4rem;
+    font-weight: 600;
+    line-height: 1.4;
+    background-color: #272732;
+    color: #efeff1;
+    -webkit-text-fill-color: initial;
+    background-clip: border-box;
+}
