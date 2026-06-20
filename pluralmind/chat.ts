@@ -1,4 +1,6 @@
-import type { ChatMessageEnvironment, ChatMessageType, ChatMessage, TwitchId } from './types'
+import type { TwitchId } from 'pluralmind'
+
+import type { ChatMessageEnvironment, ChatMessageType, ChatMessage } from './types'
 
 type ChatMessageCallback = (chatMessage: ChatMessage) => void
 
