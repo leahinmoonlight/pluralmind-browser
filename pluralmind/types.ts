@@ -17,4 +17,5 @@ export interface ChatMessage {
     rootElement: HTMLElement
     nameElement: HTMLElement
     bodyElement: HTMLElement
+    pronounsTargetElement: HTMLElement | null
 }

@@ -18,7 +18,7 @@ const handleMessage = async (message: ChatMessage) => {
     message.bodyElement!.textContent = pm.body
     if (pm.color) message.nameElement.style.setProperty('color', pm.color)
     if (pm.pronouns) {
-        message.nameElement.parentElement!.setAttribute('data-pm-pronouns', pm.pronouns)
+        message.pronounsTargetElement?.setAttribute('data-pm-pronouns', pm.pronouns)
 
         // Hide FFZ's pronouns for this message, if they're present
         message.rootElement.classList.add('pm-pronouns')

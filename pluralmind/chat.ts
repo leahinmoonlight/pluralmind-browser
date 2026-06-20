@@ -8,6 +8,7 @@ const liveMessageSelector = '.chat-line__message'
 const vodMessageSelector = '.vod-message'
 const nameElementSelector = '.chat-author__display-name[data-a-user]'
 const bodyElementSelector = '.text-fragment[data-a-target="chat-message-text"]'
+const pronounsTargetSelector = '.chat-line__username, .video-chat__message-author'
 const ffzMetadataSelector = 'div[data-room-id][data-user-id][data-user]'
 const ffzNameElementSelector = '.chat-author__display-name'
 const anyEnvironmentMessageSelector = `${nameElementSelector}, ${ffzMetadataSelector}`
@@ -46,6 +47,7 @@ export const observeChatMessages = (callback: ChatMessageCallback) => {
             rootElement,
             nameElement,
             bodyElement,
+            pronounsTargetElement: nameElement.closest(pronounsTargetSelector) as HTMLElement | null,
         }
         callback(chatMessage)
     }
