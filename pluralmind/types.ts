@@ -1,9 +1,9 @@
 import type { ProxyServiceKey } from '@webext-core/proxy-service'
 import type { TwitchId } from 'pluralmind'
 
-import type { PluralMindService } from './service'
+import type { PluralmindService } from './service'
 
-export const PLURALMIND_SERVICE_KEY = 'pluralmind-service' as ProxyServiceKey<PluralMindService>
+export const PLURALMIND_SERVICE_KEY = 'pluralmind-service' as ProxyServiceKey<PluralmindService>
 
 export type ChatMessageType = 'live' | 'vod'
 

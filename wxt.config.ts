@@ -3,7 +3,7 @@ import { defineConfig } from 'wxt'
 // See https://wxt.dev/api/config.html
 export default defineConfig({
     manifest: {
-        name: 'PluralMind - Plurality Plugin for Twitch Chat',
+        name: 'Pluralmind - Plurality Plugin for Twitch Chat',
         host_permissions: ['https://pluralmind.chat/*'],
         browser_specific_settings: {
             gecko: {
