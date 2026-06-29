@@ -12,6 +12,7 @@ const pronounsTargetSelector = '.chat-line__username, .video-chat__message-autho
 const ffzMetadataSelector = 'div[data-room-id][data-user-id][data-user]'
 const ffzNameElementSelector = '.chat-author__display-name'
 const anyEnvironmentMessageSelector = `${nameElementSelector}, ${ffzMetadataSelector}`
+const proxiedNameElementSelector = '.chat-author__display-name[data-pm-name]'
 
 export const observeChatMessages = (callback: ChatMessageCallback) => {
     const examineMessage = (hookElement: HTMLElement) => {
@@ -66,4 +67,11 @@ export const observeChatMessages = (callback: ChatMessageCallback) => {
     })
 
     observer.observe(document.body, { childList: true, subtree: true })
+}
+
+/**
+ * Returns all of the name elements we've already added proxy information to.
+ */
+export const getAllProxiedNameElements = (): NodeListOf<HTMLElement> => {
+    return document.querySelectorAll(proxiedNameElementSelector)
 }

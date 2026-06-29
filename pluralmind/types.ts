@@ -19,3 +19,9 @@ export interface ChatMessage {
     bodyElement: HTMLElement
     pronounsTargetElement: HTMLElement | null
 }
+
+export interface SettingsV1 {
+    showUsernames: boolean
+}
+
+export interface Settings extends SettingsV1 {}
