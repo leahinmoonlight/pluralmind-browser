@@ -9,7 +9,7 @@ export default defineConfig({
         permissions: ['storage'],
         browser_specific_settings: {
             gecko: {
-                id: 'pluralmind@pluralmind.chat',
+                id: '{f5313eba-0033-40a2-954a-2a851ebcf2ef}',
                 data_collection_permissions: {
                     required: ['none'],
                 },
