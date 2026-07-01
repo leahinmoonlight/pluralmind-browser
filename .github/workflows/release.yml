@@ -1,0 +1,73 @@
+name: release
+
+on:
+  release:
+    types:
+      - published
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release-${{ github.ref_name }}
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Get the version from package.json and sanity check it matches our release
+        run: |
+          CODE_VERSION=$(jq -r .version package.json)
+          RELEASE_VERSION="${{ github.event.release.tag_name }}"
+          if [ "v$CODE_VERSION" != "$RELEASE_VERSION" ]; then
+            echo "::error::Release version $RELEASE_VERSION doesn't match package.json v$CODE_VERSION."
+            exit 1
+          fi
+          echo "VERSION=$CODE_VERSION" >> "$GITHUB_ENV"
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v6
+
+      - name: Set up node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Zip extensions
+        run: pnpm zip
+
+      - name: Add extra browsers to chrome build name
+        run: |
+          mv ".output/pluralmind-$VERSION-chrome.zip" ".output/pluralmind-$VERSION-chrome-edge-opera.zip"
+
+      - name: Upload the built extensions to the release
+        run: |
+          gh release upload "${{ github.event.release.tag_name }}" \
+            ".output/pluralmind-$VERSION-chrome-edge-opera.zip" \
+            ".output/pluralmind-$VERSION-firefox.zip" \
+            --clobber
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Submit to stores
+        if: ${{ !github.event.release.prerelease }}
+        run: |
+          pnpm wxt submit \
+            --chrome-zip .output/*-chrome-edge-opera.zip \
+            --firefox-zip .output/*-firefox.zip --firefox-sources-zip .output/*-sources.zip
+        env:
+          CHROME_EXTENSION_ID: ${{ secrets.CHROME_EXTENSION_ID }}
+          CHROME_CLIENT_ID: ${{ secrets.CHROME_CLIENT_ID }}
+          CHROME_CLIENT_SECRET: ${{ secrets.CHROME_CLIENT_SECRET }}
+          CHROME_REFRESH_TOKEN: ${{ secrets.CHROME_REFRESH_TOKEN }}
+          FIREFOX_EXTENSION_ID: ${{ secrets.FIREFOX_EXTENSION_ID }}
+          FIREFOX_JWT_ISSUER: ${{ secrets.FIREFOX_JWT_ISSUER }}
+          FIREFOX_JWT_SECRET: ${{ secrets.FIREFOX_JWT_SECRET }}
