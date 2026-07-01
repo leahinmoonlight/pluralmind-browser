@@ -16,7 +16,7 @@ Get it free from [Firefox Add-Ons](https://addons.mozilla.org/en-US/firefox/addo
 We'll have a Safari version soon!
 
 > [!TIP]
-> You can also always grab the latest version from the [releases page](https://git.gay/leahinmoonlight/pluralmind-browser/releases).
+> You can also always grab the latest version from the [releases page](https://github.com/leahinmoonlight/pluralmind-browser/releases).
 
 ## FAQ
 
@@ -24,7 +24,7 @@ We'll have a Safari version soon!
 That's actually done through [our website](https://pluralmind.chat)! Head over there and hit "Log in with Twitch". From there, you'll be able to customize your system, and add members.
 
 ### Can I integrate Pluralmind into my own chat widget, etc?
-Yes! We have a [library](https://git.gay/leahinmoonlight/pluralmind) that makes it super easy to integrate Pluralmind.
+Yes! We have a [library](https://github.com/leahinmoonlight/pluralmind) that makes it super easy to integrate Pluralmind.
 
 ### I have another question, or need help!
 Happy to help! Check out the contact options near the bottom of the [pluralmind website](https://pluralmind.chat/).
