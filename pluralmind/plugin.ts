@@ -1,11 +1,12 @@
 import { createProxyService } from '@webext-core/proxy-service'
+import { each } from 'lodash-es'
 import { getProxiedMessage } from 'pluralmind'
+import { observeChatMessages, type ChatMessage } from 'twitch-refragment'
 import { watch } from 'vue'
 
 import './styles.css'
-import { getAllProxiedNameElements, observeChatMessages } from './chat'
 import { useSettings } from './settings'
-import { ChatMessage, PLURALMIND_SERVICE_KEY } from './types'
+import { PLURALMIND_SERVICE_KEY } from './types'
 
 const pluralMindService = createProxyService(PLURALMIND_SERVICE_KEY)
 
@@ -13,8 +14,8 @@ let { settings, settingsPromise, settingsReady } = useSettings()
 
 const handleMessage = async (message: ChatMessage) => {
     // Check if this user has a system, and if this is a proxied message
-    const system = await pluralMindService.getSystem(message.twitchId)
-    const pm = getProxiedMessage(system, message.bodyText)
+    const system = await pluralMindService.getSystem(message.userId ?? message.username)
+    const pm = getProxiedMessage(system, message.fragments)
     if (!pm) return
 
     // A system member sent this message, let's update it with their info
@@ -24,22 +25,30 @@ const handleMessage = async (message: ChatMessage) => {
 
     // Store the member's name and original username on the element so we can
     // toggle between them
-    const nameDataset = message.nameElement.dataset
+    const nameDataset = message.displayNameElement.dataset
     if (!nameDataset.pmName) {
         nameDataset.pmName = pm.member.name
-        nameDataset.pmNameWithUsername = `${pm.member.name} (${message.nameElement.textContent})`
+        nameDataset.pmNameWithUsername = `${pm.member.name} (${message.displayNameElement.textContent})`
     }
 
-    // Update the message
-    message.nameElement.textContent = showUsernames ? nameDataset.pmNameWithUsername! : nameDataset.pmName
-    message.bodyElement!.textContent = pm.body
-    if (pm.color) message.nameElement.style.setProperty('color', pm.color)
+    // Update the user info
+    message.displayNameElement.textContent = showUsernames ? nameDataset.pmNameWithUsername! : nameDataset.pmName
+    if (pm.color) message.displayNameElement.style.setProperty('color', pm.color)
     if (pm.pronouns) {
-        message.pronounsTargetElement?.setAttribute('data-pm-pronouns', pm.pronouns)
+        message.authorElement?.setAttribute('data-pm-pronouns', pm.pronouns)
 
         // Hide FFZ's pronouns for this message, if they're present
-        message.rootElement.classList.add('pm-pronouns')
+        message.element.classList.add('pm-pronouns')
     }
+
+    // Update the message fragments
+    each(pm.changedFragments, (fragment, idx) => {
+        if (fragment === null) {
+            message.fragments[Number(idx)].element.remove()
+        } else {
+            fragment.element.textContent = fragment.text!
+        }
+    })
 }
 
 export const monitorSettings = async () => {
@@ -51,6 +60,13 @@ export const monitorSettings = async () => {
             nameElement.textContent = nameElement.dataset[targetData]!
         })
     })
+}
+
+/**
+ * Returns all of the name elements we've already added proxy information to.
+ */
+export const getAllProxiedNameElements = (): NodeListOf<HTMLElement> => {
+    return document.querySelectorAll('.chat-author__display-name[data-pm-name]')
 }
 
 export const start = () => {

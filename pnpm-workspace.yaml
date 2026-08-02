@@ -2,4 +2,5 @@ allowBuilds:
   esbuild: true
   spawn-sync: true
 minimumReleaseAgeExclude:
-  - pluralmind@1.2.1
+  - pluralmind@2.0.1
+  - twitch-refragment@1.0.1

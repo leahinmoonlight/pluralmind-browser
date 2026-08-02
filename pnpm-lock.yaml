@@ -220,8 +220,11 @@ importers:
         specifier: ^4.18.1
         version: 4.18.1
       pluralmind:
-        specifier: ^1.2.1
-        version: 1.2.1
+        specifier: ^2.0.1
+        version: 2.0.1
+      twitch-refragment:
+        specifier: ^1.0.1
+        version: 1.0.1
       vue:
         specifier: ^3.5.39
         version: 3.5.39(typescript@5.9.3)
@@ -1797,8 +1800,8 @@ packages:
   pkg-types@2.3.1:
     resolution: {integrity: sha512-y+ichcgc2LrADuhLNAx8DFjVfgz91pRxfZdI3UDhxHvcVEZsenLO+7XaU5vOp0u/7V/wZ+plyuQxtrDlZJ+yeg==}
 
-  pluralmind@1.2.1:
-    resolution: {integrity: sha512-DlBzI90JA95WqBcaNiCxxncPPcuJRpgpIIfHL51Jhjp09rYmB/mxoj5TWQu6k3IpyHPniRBfQc3xrTbx5e+pog==}
+  pluralmind@2.0.1:
+    resolution: {integrity: sha512-7LLDGrnpTqGh3efl2nIyZlbSafZ2Mu3kGqZr+oKYGAwhaQD/DefS4cBZMA5Zj1TmfyHdKG9pNKq84b3akPVygw==}
 
   postcss@8.5.15:
     resolution: {integrity: sha512-FfR8sjd4em2T6fb3I2MwAJU7HWVMr9zba+enmQeeWFfCbm+UOC/0X4DS8XtpUTMwWMGbjKYP7xjfNekzyGmB3A==}
@@ -2090,6 +2093,9 @@ packages:
 
   tslib@2.8.1:
     resolution: {integrity: sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w==}
+
+  twitch-refragment@1.0.1:
+    resolution: {integrity: sha512-bUauk2/PcGcH6OunXnCCmhwh2TcHdh83+NYXY55AUfRi4FNInavYrQPrsA4kvMCC5TqD6PP1SMt+79tbW4vgig==}
 
   type-fest@3.13.1:
     resolution: {integrity: sha512-tLq3bSNx+xSpwvAJnzrK0Ep5CLNWjvFTOp71URMaAEWBfRb9nnJiBoUe0tF8bI4ZFO3omgBR6NvnbzVUT3Ly4g==}
@@ -3694,7 +3700,7 @@ snapshots:
       exsolve: 1.0.8
       pathe: 2.0.3
 
-  pluralmind@1.2.1: {}
+  pluralmind@2.0.1: {}
 
   postcss@8.5.15:
     dependencies:
@@ -4021,6 +4027,8 @@ snapshots:
   token-stream@1.0.0: {}
 
   tslib@2.8.1: {}
+
+  twitch-refragment@1.0.1: {}
 
   type-fest@3.13.1: {}
 
