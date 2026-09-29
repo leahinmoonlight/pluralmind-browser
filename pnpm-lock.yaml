@@ -220,8 +220,8 @@ importers:
         specifier: ^4.18.1
         version: 4.18.1
       pluralmind:
-        specifier: ^2.0.1
-        version: 2.0.1
+        specifier: ^2.1.1
+        version: 2.1.1
       twitch-refragment:
         specifier: ^1.0.1
         version: 1.0.1
@@ -1800,8 +1800,8 @@ packages:
   pkg-types@2.3.1:
     resolution: {integrity: sha512-y+ichcgc2LrADuhLNAx8DFjVfgz91pRxfZdI3UDhxHvcVEZsenLO+7XaU5vOp0u/7V/wZ+plyuQxtrDlZJ+yeg==}
 
-  pluralmind@2.0.1:
-    resolution: {integrity: sha512-7LLDGrnpTqGh3efl2nIyZlbSafZ2Mu3kGqZr+oKYGAwhaQD/DefS4cBZMA5Zj1TmfyHdKG9pNKq84b3akPVygw==}
+  pluralmind@2.1.1:
+    resolution: {integrity: sha512-vJqPTYUVxXhDyKYK3h/ANHjL8cmwT8um+xU6HSmPACmXTedFfMAP6aYScnqTJB7B6mGLQcptTxObOdcrPgSfUg==}
 
   postcss@8.5.15:
     resolution: {integrity: sha512-FfR8sjd4em2T6fb3I2MwAJU7HWVMr9zba+enmQeeWFfCbm+UOC/0X4DS8XtpUTMwWMGbjKYP7xjfNekzyGmB3A==}
@@ -3700,7 +3700,7 @@ snapshots:
       exsolve: 1.0.8
       pathe: 2.0.3
 
-  pluralmind@2.0.1: {}
+  pluralmind@2.1.1: {}
 
   postcss@8.5.15:
     dependencies:
